@@ -1,0 +1,9 @@
+#!/usr/bin/env node
+var Rephraser = require("../lib/rephraser")
+  , path = require("path")
+  , configurationPath = process.argv[2]||"./conf/rephraser.conf"
+  , configurationAbsolutePath = path.resolve(process.cwd(),configurationPath)
+  , configuration = require(configurationAbsolutePath);
+  
+Rephraser.run(configuration);
+
