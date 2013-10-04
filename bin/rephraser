@@ -2,7 +2,10 @@
 
 Rephraser = require("../rephraser")
 path = require("path")
-configurationPath = process.argv[2] || "./conf/rephraser.conf"
+
+[_node, _script, configurationPath] = process.argv
+configurationPath ||= "./conf/rephraser.conf"
+
 configurationAbsolutePath = path.resolve(process.cwd(), configurationPath)
 configuration = require(configurationAbsolutePath)
   
