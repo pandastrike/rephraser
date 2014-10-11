@@ -1,0 +1,24 @@
+cluster.name: {{es_cluster_name}}
+node.master: true
+node.data: true
+index.number_of_shards: 5
+index.number_of_replicas: 1
+path.conf: /etc/elasticsearch
+path.work: /tmp/elasticsearch
+path.data: /data/elasticsearch
+path.logs: /var/log/elasticsearch
+
+discovery.zen.minimum_master_nodes: 1
+script.disable_dynamic: false
+#discovery.zen.ping.timeout: 3s
+#discovery.zen.ping.unicast.hosts: ["10.201.141.219:9300"]
+
+# EC2 discovery allows to use AWS EC2 API in order to perform discovery.
+cloud:
+    aws:
+        access_key: {{aws_access_key}}
+        secret_key: {{aws_secret_key}}
+        protocol: http
+        region: {{region}}
+discovery:
+    type: ec2

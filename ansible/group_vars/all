@@ -1,0 +1,28 @@
+---
+ansible_python_interpreter: /usr/bin/python2
+ansible_sh_interpreter: /usr/bin/sh
+
+tag_customer: rephraser
+tag_project: app
+env: production
+port: 80
+
+
+region: us-west-1
+zone: us-west-1c
+keypair: ec2-dye_us_west_california
+security_group: rephraser
+instance_type: m1.small
+# Arch Linux
+image: ami-89c4c4cc
+instance_count: 1
+
+
+repo_url: ssh://git@github.com/pandastrike/rephraser.git
+repo_dir: /usr/local/rephraser/
+branch: master
+
+
+cloudwatch_dir: /usr/local
+aws_credential_file_src: /usr/local/rephraser/ansible/awscreds.template
+aws_credential_file_dest: "{{cloudwatch_dir}}/aws-scripts-mon/awscreds.template"

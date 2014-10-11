@@ -1,0 +1,39 @@
+---
+- name: Download HAProxy AUR package
+  get_url: url=https://aur.archlinux.org/packages/ha/haproxy/haproxy.tar.gz
+           dest=/tmp/
+
+- name: Untar HAProxy
+  unarchive: src=/tmp/haproxy.tar.gz
+             dest=/tmp/
+             creates=/tmp/haproxy/
+             copy=no
+
+- name: Install HAProxy
+  command: makepkg --syncdeps --install --asroot --clean --nocolor --noconfirm --noprogressbar
+           chdir=/tmp/haproxy/
+
+- name: Make HAProxy chroot directory
+  file: path=/usr/share/haproxy
+        state=directory
+        owner=root group=root mode=0755
+
+- name: Upload HAProxy errors directory
+  copy: src=errors
+        dest=/etc/haproxy/
+        owner=root group=root mode=0755
+
+- name: Upload HAProxy config
+  template: src=haproxy.cfg.j2
+            dest=/etc/haproxy/haproxy.cfg
+            owner=root group=root mode=0640
+  notify:
+    - restart haproxy
+- name: configure syslog-ng.conf
+  template: src=syslog-ng.conf.j2
+            dest=/etc/syslog-ng/syslog-ng.conf
+  notify: 
+    - reload syslog-ng
+
+- name: enable and start syslog-ng
+  service: name=syslog-ng enabled=true state=started

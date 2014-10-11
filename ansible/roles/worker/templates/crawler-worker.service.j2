@@ -1,0 +1,12 @@
+[Unit]
+Description=Crawler worker {{env}} {{worker_type}}
+
+[Service]
+User=root
+WorkingDirectory={{crawler_dir}}
+ExecStart=/usr/bin/coffee {{worker_executable}} {{env}} {{worker_type}}
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+

@@ -1,0 +1,60 @@
+---
+#ansible-playbook -v search-production.yml --extra-vars 'tag_name=web-api tag_project=search tag_role=web-api env=production branch=release'
+- name: Find old instances based on tags
+  hosts: tag_customer_shopperr:&tag_project_search:&tag_role_web-api:&tag_environment_{{env}}
+  gather_facts: true
+
+  tags:
+    - find
+
+  tasks:
+    - name: Get instance data from the metadata servers in EC2
+      ec2_facts:
+
+    - name: Create group
+      group_by: key=legacy
+
+- name: Launch
+  hosts: 127.0.0.1
+  connection: local
+  gather_facts: false
+
+  roles:
+    - launch
+
+
+- name: Configure
+  hosts: launch
+  user: root
+  gather_facts: false
+
+  roles:
+    - bootstrap
+    - authorized_keys
+    - tune
+    - common_packages
+    - haproxy
+    - {role: search, port: "80"}
+    - {role: dns, record: "rephraser.pandastrike.com"}
+
+- name: Enable CloudWatch monitoring and alarms
+  hosts: launch
+  user: root
+  gather_facts: false
+
+  roles:
+    - enable-cloudwatch
+    - cloudwatch-alarms
+
+- name: Terminate legacy instance(s)
+  hosts: legacy
+  connection: local
+  gather_facts: false
+
+  tags:
+    - term
+    - terminate
+    - destroy
+
+  roles:
+    - terminate

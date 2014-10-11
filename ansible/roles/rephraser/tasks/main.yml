@@ -1,0 +1,51 @@
+---
+- name: Get instance data from the metadata servers in EC2
+  ec2_facts:
+
+- name: Install required Arch packages
+  pacman: name=git,nodejs
+          state=installed
+
+- name: Install CoffeeScript
+  command: npm install -g coffee-script
+           creates=/usr/bin/coffee
+
+- name: Upload SSH key
+  copy: src=~/.ssh/github-id_rsa
+        dest=/root/.ssh/id_rsa
+        mode=0600
+
+- name: Git clone
+  git: repo={{repo_url}}
+       dest={{repo_dir}}
+       version={{branch}}
+       depth=1
+       accept_hostkey=yes
+
+- name: Run NPM install
+  command: npm install
+           chdir={{search_dir}}
+
+- name: Upload Rephraser
+  template: src=./rephraser.service.j2
+            dest=/etc/systemd/system/rephraser.service
+            owner=root group=root mode=0644
+
+- name: Enable API service
+  service: name=rephraser.service
+           enabled=yes
+           state=started
+
+- name: Upload Web service
+  template: src=./rephraser.service.j2
+            dest=/etc/systemd/system/rephraser.service
+            owner=root group=root mode=0644
+
+- name: Enable Web service
+  service: name=rephraser.service
+           enabled=yes
+           state=started
+
+- name: Wait for, test, Web service before continuing
+  wait_for: port={{port}}
+

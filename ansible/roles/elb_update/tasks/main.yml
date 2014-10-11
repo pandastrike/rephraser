@@ -1,0 +1,10 @@
+---
+- name: Update instance in ELB
+  local_action: ec2_elb
+  args:
+    instance_id: "{{ ansible_ec2_instance_id }}"
+    ec2_elbs: "{{env}}-shopperr"
+    region: "{{region}}"
+    state: "{{state}}"
+  ignore_errors: yes
+  

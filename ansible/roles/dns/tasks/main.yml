@@ -1,0 +1,12 @@
+---
+
+- name: Update DNS, delete old, add new
+  local_action:
+    module: route53
+    command: create
+    overwrite: yes
+    zone: shopperr.com
+    record: "{{ record }}"
+    type: A
+    ttl: 60
+    value: "{{hostvars[inventory_hostname]['ansible_ec2_public_ipv4']}}"

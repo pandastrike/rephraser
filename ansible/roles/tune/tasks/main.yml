@@ -1,0 +1,23 @@
+---
+
+- name: Create sysctl.conf file
+  file: path=/etc/sysctl.d/99-sysctl.conf
+        state=touch
+
+- name: Modify sysctl
+  sysctl: name=fs.file-max
+          value=999999
+          sysctl_file=/etc/sysctl.d/99-sysctl.conf
+          sysctl_set=yes
+          state=present
+          reload=yes
+
+- name: Create limits.d directory
+  file: path=/etc/security/limits.d/
+        state=directory
+
+- name: Create limits.conf file
+  template: src=./99-limits.conf.j2
+            dest=/etc/security/limits.d/99-limits.conf
+            owner=root group=root mode=0644
+

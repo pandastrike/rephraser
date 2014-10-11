@@ -1,0 +1,6 @@
+---
+- name: format new volume
+  filesystem: fstype=ext4 dev=/dev/xvdb
+
+- name: edit fstab and mount the vol
+  action: mount name=/data src=/dev/xvdb opts=defaults,noatime dump=0 passno=0 fstype=ext4 state=mounted

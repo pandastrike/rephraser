@@ -1,0 +1,7 @@
+---
+- name: Terminate legacy instance(s)
+  ec2:
+    region: "{{region}}"
+    wait: yes 
+    instance_ids: "{{hostvars[inventory_hostname]['ansible_ec2_instance_id']}}"
+    state: 'absent'

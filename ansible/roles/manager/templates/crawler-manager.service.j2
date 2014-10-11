@@ -1,0 +1,12 @@
+[Unit]
+Description=Crawler Manager
+
+[Service]
+User=root
+WorkingDirectory={{crawler_dir}}
+ExecStart=/usr/bin/coffee {{manager_executable}} {{env}}
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
