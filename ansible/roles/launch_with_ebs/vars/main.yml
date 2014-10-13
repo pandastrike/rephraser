@@ -1,4 +1,0 @@
----
-tag_name: "shopperr-{{env}}-es"
-tag_role: "elasticsearch"
-tag_node: "master"

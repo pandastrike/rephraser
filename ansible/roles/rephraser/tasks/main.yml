@@ -31,21 +31,10 @@
             dest=/etc/systemd/system/rephraser.service
             owner=root group=root mode=0644
 
-- name: Enable API service
-  service: name=rephraser.service
-           enabled=yes
-           state=started
-
-- name: Upload Web service
-  template: src=./rephraser.service.j2
-            dest=/etc/systemd/system/rephraser.service
-            owner=root group=root mode=0644
-
-- name: Enable Web service
+- name: Enable Rephraser service
   service: name=rephraser.service
            enabled=yes
            state=started
 
 - name: Wait for, test, Web service before continuing
   wait_for: port={{port}}
-

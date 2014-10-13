@@ -2,9 +2,10 @@
 ansible_python_interpreter: /usr/bin/python2
 ansible_sh_interpreter: /usr/bin/sh
 
+
 tag_customer: rephraser
 tag_project: app
-env: production
+env: staging
 port: 80
 
 
@@ -21,6 +22,10 @@ instance_count: 1
 repo_url: ssh://git@github.com/pandastrike/rephraser.git
 repo_dir: /usr/local/rephraser/
 branch: master
+
+
+production_url: rephraser.pandastrike.com
+staging_url: staging-rephraser.pandastrike.com
 
 
 cloudwatch_dir: /usr/local

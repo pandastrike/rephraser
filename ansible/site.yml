@@ -1,5 +1,5 @@
 ---
-#ansible-playbook -v search-production.yml --extra-vars 'tag_name=web-api tag_project=search tag_role=web-api env=production branch=release'
+#ansible-playbook -v site.yml --extra-vars 'env=production branch=release'
 - name: Find old instances based on tags
   hosts: tag_customer_shopperr:&tag_project_search:&tag_role_web-api:&tag_environment_{{env}}
   gather_facts: true
@@ -22,7 +22,6 @@
   roles:
     - launch
 
-
 - name: Configure
   hosts: launch
   user: root
@@ -34,8 +33,7 @@
     - tune
     - common_packages
     - haproxy
-    - {role: search, port: "80"}
-    - {role: dns, record: "rephraser.pandastrike.com"}
+    - dns
 
 - name: Enable CloudWatch monitoring and alarms
   hosts: launch

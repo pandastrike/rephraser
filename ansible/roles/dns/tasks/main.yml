@@ -1,12 +1,22 @@
 ---
 
+- name: Define record based on environment
+  set_fact:
+    dns_record: "{{production_url}}"
+  when: env=="production"
+
+- name: Define record based on environment
+  set_fact:
+    dns_record: "{{staging_url}}"
+  when: env=="staging"
+
 - name: Update DNS, delete old, add new
   local_action:
     module: route53
     command: create
     overwrite: yes
-    zone: shopperr.com
-    record: "{{ record }}"
+    zone: pandastrike.com
+    record: "{{dns_record}}"
     type: A
     ttl: 60
     value: "{{hostvars[inventory_hostname]['ansible_ec2_public_ipv4']}}"
