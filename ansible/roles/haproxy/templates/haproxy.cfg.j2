@@ -33,7 +33,7 @@ frontend  http-in
         option httplog
         acl is_from_gravee path_beg -i /gravee
  
-        use_backend seo_server if is_from_gravee
+        use_backend rephraser if is_from_gravee
         default_backend default_server
 
 
@@ -45,11 +45,11 @@ listen stats :1999
         stats uri /
         stats auth  {{stats_user}}:{{stats_password}}
 
-backend seo_server
+backend rephraser
         mode http
         option httpclose
         option forwardfor
-        server seo-server shopperr-seo.shopperr.com:80 check
+        server rephraser {{dns_record}}:80 check
 
 backend default_server
         mode http

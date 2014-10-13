@@ -1,7 +1,7 @@
 ---
 #ansible-playbook -v site.yml --extra-vars 'env=production branch=release'
 - name: Find old instances based on tags
-  hosts: tag_customer_shopperr:&tag_project_search:&tag_role_web-api:&tag_environment_{{env}}
+  hosts: tag_customer_rephraser:&tag_project_search:&tag_role_web-api:&tag_environment_{{env}}
   gather_facts: true
 
   tags:
@@ -32,8 +32,8 @@
     - authorized_keys
     - tune
     - common_packages
-    - haproxy
     - dns
+    - haproxy
 
 - name: Enable CloudWatch monitoring and alarms
   hosts: launch

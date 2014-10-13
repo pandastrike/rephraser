@@ -4,7 +4,9 @@ ansible_sh_interpreter: /usr/bin/sh
 
 
 tag_customer: rephraser
-tag_project: app
+tag_project: repherase
+tag_name: rephraser
+tag_role: app
 env: staging
 port: 80
 

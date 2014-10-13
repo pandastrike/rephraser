@@ -1,5 +1,5 @@
 ---
-app_name: "shopperr-production"
+app_name: "rephraser-{{env}}"
 alarm_recipients: ["arn:aws:sns:us-west-1:749621196531:Peter"]
 alarm_region: "us-west-1"
 

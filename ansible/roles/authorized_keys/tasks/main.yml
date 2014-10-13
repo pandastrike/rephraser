@@ -7,6 +7,5 @@
                   key="{{ item }}"
   with_file:
     - /root/.ssh/matthew-id_rsa.pub
-    - /root/.ssh/lance-id_rsa.pub
     - /root/.ssh/peter-id_rsa.pub
 
