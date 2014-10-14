@@ -1,5 +1,5 @@
 ---
-#ansible-playbook -v site.yml --extra-vars 'env=production branch=release'
+#ansible-playbook -v site.yml --extra-vars 'env=production branch=ansible'
 - name: Find old instances based on tags
   hosts: tag_customer_rephraser:&tag_project_rephraser:&tag_role_app:&tag_environment_{{env}}
   gather_facts: true
