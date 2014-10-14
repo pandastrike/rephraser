@@ -1,0 +1,16 @@
+---
+
+- name: Install Redis
+  pacman: name=redis
+          state=installed
+
+- name: Edit Redis config file
+  lineinfile: dest=/etc/redis.conf
+              regexp="^bind 127.0.0.1"
+              line="bind 0.0.0.0"
+
+- name: Enable Redis service
+  service: name=redis.service
+           enabled=yes
+           state=started
+

@@ -1,0 +1,46 @@
+---
+app_name: "rephraser-{{env}}"
+alarm_recipients: ["arn:aws:sns:us-west-1:749621196531:Peter"]
+alarm_region: "us-west-1"
+
+metric_alarms:
+  cpu_util:
+    metric: "CPUUtilization"
+    unit: "Percent"
+    statistic: "Average"
+    comparison: ">="
+    alarm_name: "{{app_name}}-cpu-util"
+    period: 60
+    threshold: 95
+    namespace: "AWS/EC2"
+    dimensions: {'InstanceId':'{{this_instance_id.stdout}}'}
+  disk_util:
+    metric: "DiskSpaceUtilization"
+    unit: "Percent"
+    statistic: "Average"
+    comparison: ">="
+    alarm_name: "{{app_name}}-disk-util"
+    period: 60
+    threshold: 80
+    namespace: "System/Linux"
+    dimensions: {'InstanceId':'{{this_instance_id.stdout}}','Filesystem':'/dev/xvda1','DiskPath':'/'}
+  memory_util:
+    metric: "MemoryUtilization"
+    unit: "Percent"
+    statistic: "Average"
+    comparison: ">="
+    alarm_name: "{{app_name}}-memory-util"
+    period: 60
+    threshold: 80
+    namespace: "System/Linux"
+    dimensions: {'InstanceId':'{{this_instance_id.stdout}}'}
+  swap_util:
+    metric: "SwapUtilization"
+    unit: "Percent"
+    statistic: "Average"
+    comparison: ">="
+    alarm_name: "{{app_name}}-swap-util"
+    period: 60
+    threshold: 80
+    namespace: "System/Linux"
+    dimensions: {'InstanceId':'{{this_instance_id.stdout}}'}

@@ -1,0 +1,14 @@
+# Controls the user specific maximum number of file descriptors
+# * sets the limit for all users except root
+# root sets the limit for the root user
+
+* soft  nofile  999999
+* hard  nofile  999999 
+root  soft  nofile  999999
+root  hard  nofile  999999
+
+*  soft  memlock  unlimited
+*  hard  memlock  unlimited
+root  soft  memlock  unlimited
+root  hard  memlock  unlimited
+

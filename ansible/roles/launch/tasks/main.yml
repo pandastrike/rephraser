@@ -1,0 +1,31 @@
+---
+
+- name: Launch instance
+  ec2:
+    region: '{{ region }}'
+    zone: '{{ zone }}'
+    keypair: '{{ keypair }}'
+    group: '{{ security_group }}'
+    image: '{{ image }}'
+    instance_type: '{{ instance_type }}'
+    count: '{{ instance_count }}'
+    instance_tags: '{"Name":"{{env}} {{tag_name}}", "customer":"{{tag_customer}}","project":"{{tag_project}}","role":"{{tag_role}}","environment":"{{env}}"}'
+    wait: yes
+  register: ec2
+
+# Use with_items to add each instances public IP to a new hostgroup for use in the next play.
+- name: Add new instances to host group
+  add_host:
+    name: '{{item.public_dns_name}}'
+    groups: launch
+  with_items: ec2.instances
+
+- name: Wait for SSH to be available
+  wait_for:
+    host: '{{item.public_dns_name}}'
+    port: 22
+    delay: 60
+    timeout: 320
+    state: started
+  with_items: ec2.instances
+

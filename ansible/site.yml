@@ -1,0 +1,59 @@
+---
+#ansible-playbook -v site.yml --extra-vars 'env=production branch=ansible'
+- name: Find old instances based on tags
+  hosts: tag_customer_rephraser:&tag_project_rephraser:&tag_role_app:&tag_environment_{{env}}
+  gather_facts: true
+
+  tags:
+    - find
+
+  tasks:
+    - name: Get instance data from the metadata servers in EC2
+      ec2_facts:
+
+    - name: Create group
+      group_by: key=legacy
+
+- name: Launch
+  hosts: 127.0.0.1
+  connection: local
+  gather_facts: false
+
+  roles:
+    - launch
+
+- name: Configure
+  hosts: launch
+  user: root
+  gather_facts: false
+
+  roles:
+    - bootstrap
+    - authorized_keys
+    - tune
+    - common_packages
+    - rephraser
+    - dns
+    - haproxy
+
+- name: Enable CloudWatch monitoring and alarms
+  hosts: launch
+  user: root
+  gather_facts: false
+
+  roles:
+    - enable-cloudwatch
+    - cloudwatch-alarms
+
+- name: Terminate legacy instance(s)
+  hosts: legacy
+  connection: local
+  gather_facts: false
+
+  tags:
+    - term
+    - terminate
+    - destroy
+
+  roles:
+    - terminate

@@ -1,0 +1,6 @@
+---
+
+- name: Install misc Arch packages
+  pacman: name=curl,rsync,vim,tmux,sysstat,lsof,ngrep,tree,syslog-ng
+          state=installed
+

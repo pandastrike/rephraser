@@ -1,0 +1,12 @@
+[Unit]
+Description=Rephraser App
+
+[Service]
+User=root
+WorkingDirectory={{repo_dir}}
+ExecStart=/usr/bin/coffee {{repo_dir}}bin/rephraser {{env}}
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
