@@ -1,9 +1,9 @@
 [Unit]
-Description=Shopper Search API
+Description=Rephraser App
 
 [Service]
 User=root
-WorkingDirectory={{search_dir}}
+WorkingDirectory={{repo_dir}}
 ExecStart=/usr/bin/coffee {{repo_url}}bin/rephraser {{env}}
 Restart=always
 

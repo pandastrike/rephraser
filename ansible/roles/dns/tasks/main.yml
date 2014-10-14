@@ -10,6 +10,9 @@
     dns_record: "{{staging_url}}"
   when: env=="staging"
 
+- debug: msg="hostvars {{hostvars}}" 
+- debug: msg="{{hostvars['127.0.0.1']}}"
+
 - name: Update DNS, delete old, add new
   local_action:
     module: route53
@@ -19,4 +22,6 @@
     record: "{{dns_record}}"
     type: A
     ttl: 60
-    value: "{{hostvars[inventory_hostname]['ansible_ec2_public_ipv4']}}"
+    value: "{{hostvars['127.0.0.1']['ec2']['instances'][0]['public_ip']}}"
+
+#value: "{{hostvars[inventory_hostname]['ansible_ec2_public_ipv4']}}"

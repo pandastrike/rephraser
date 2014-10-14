@@ -24,7 +24,7 @@
 
 - name: Run NPM install
   command: npm install
-           chdir={{search_dir}}
+           chdir={{repo_dir}}
 
 - name: Upload Rephraser
   template: src=./rephraser.service.j2
@@ -36,5 +36,5 @@
            enabled=yes
            state=started
 
-- name: Wait for, test, Web service before continuing
-  wait_for: port={{port}}
+#- name: Wait for, test, Web service before continuing
+#  wait_for: port={{port}}
