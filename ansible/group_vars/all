@@ -31,5 +31,5 @@ staging_url: staging-rephraser.pandastrike.com
 
 
 cloudwatch_dir: /usr/local
-aws_credential_file_src: /usr/local/rephraser/ansible/awscreds.template
+aws_credential_file_src: /usr/local/cloudwatch/awscreds
 aws_credential_file_dest: "{{cloudwatch_dir}}/aws-scripts-mon/awscreds.template"
