@@ -23,7 +23,8 @@ metric_alarms:
     period: 60
     threshold: 80
     namespace: "System/Linux"
-    dimensions: {'InstanceId':'{{this_instance_id.stdout}}','Filesystem':'/dev/xvda1','MountPath':'/'}
+    #dimensions: {'InstanceId':'{{this_instance_id.stdout}}','Filesystem':'/dev/xvda1','MountPath':'/'}
+    dimensions: 'InstanceId={{this_instance_id.stdout}},Filesystem=/dev/xvda1,MountPath=/'
   memory_util:
     metric: "MemoryUtilization"
     unit: "Percent"
