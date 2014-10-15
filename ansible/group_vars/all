@@ -7,7 +7,7 @@ tag_customer: rephraser
 tag_project: repheraser
 tag_name: rephraser
 tag_role: app
-env: staging 
+env: staging
 port: 80
 
 
