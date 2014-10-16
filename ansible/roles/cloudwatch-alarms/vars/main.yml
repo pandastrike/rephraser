@@ -14,16 +14,6 @@ metric_alarms:
     threshold: 95
     namespace: "AWS/EC2"
     dimensions: {'InstanceId':'{{this_instance_id.stdout}}'}
-  disk_util:
-    metric: "DiskSpaceUtilization"
-    unit: "Percent"
-    statistic: "Average"
-    comparison: ">="
-    alarm_name: "{{app_name}}-disk-util"
-    period: 60
-    threshold: 80
-    namespace: "System/Linux"
-    dimensions: 'InstanceId={{this_instance_id.stdout}},Filesystem=/dev/xvda1,MountPath=/'
   memory_util:
     metric: "MemoryUtilization"
     unit: "Percent"
@@ -44,3 +34,14 @@ metric_alarms:
     threshold: 80
     namespace: "System/Linux"
     dimensions: {'InstanceId':'{{this_instance_id.stdout}}'}
+
+disk_util:
+  metric: "DiskSpaceUtilization"
+  unit: "Percent"
+  statistic: "Average"
+  comparison: "GreaterThanThreshold"
+  alarm_name: "{{app_name}}-disk-util"
+  period: 60
+  threshold: 80
+  namespace: "System/Linux"
+  dimensions: "Name='InstanceId',Value='{{this_instance_id}}' Name='Filesystem',Value='/dev/xvda1' Name='MountPath',Value='/'"

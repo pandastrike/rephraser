@@ -21,3 +21,38 @@
     period: "{{item.value.period}}"
     evaluation_periods: "{{item.value.period}}"
     unit: "{{item.value.unit}}"
+
+# workaround, disk space metric requires passing in extra dimensions
+# that aren't being recognized by AWS (could be Ansible issue)
+
+- name: Install AWS cli
+  command: pip install awscli
+
+# https://github.com/aws/aws-cli section "Getting Started"
+- name: Copy credentials to location AWS cli expects and in correct format
+  command: "{{item}}"
+  with_items:
+    - mkdir ~/.aws/
+    - cp /usr/local/aws-scripts-mon/awscreds.template ~/.aws/config -r
+    - sed -i 's/AWSAccessKeyId/aws_access_key_id/g' ~/.aws/config
+    - sed -i 's/AWSSecretKey/aws_secret_access_key/g' ~/.aws/config
+    - echo '[default]' | cat - ~/.aws/config > temp && mv temp ~/.aws/config.txt
+    - echo "region=us-west-1" >> ~/.aws/config
+
+- name: Create DiskSpaceUtilization alarm with AWS cli
+  with_dict: disk_util
+  command: >
+    'aws cloudwatch put-metric-alarm
+    --region {{alarm_region}}
+    --alarm-name {{item.alarm_name}}
+    --metric-name {{item.metric}}
+    --namespace {{item.namespace}}
+    --statistic {{item.statistic}}
+    --period {{item.period}}
+    --threshold {{item.threshold}}
+    --comparison-operator {{item.comparison}}
+    --dimensions {{item.dimensions}}
+    --evaluation-periods {{item.period}}
+    --alarm-actions {{alarm_recipients}}
+    --unit {{item.unit}}
+    --profile default'
