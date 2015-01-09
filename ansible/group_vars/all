@@ -16,7 +16,7 @@ keypair: ec2-dye_us_west_california
 security_group: rephraser
 instance_type: m1.small
 # Arch Linux
-image: ami-25212360
+image: ami-977e63d2
 instance_count: 1
 
 
