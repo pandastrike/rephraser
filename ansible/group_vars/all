@@ -14,9 +14,9 @@ region: us-west-1
 zone: us-west-1c
 keypair: ec2-dye_us_west_california
 security_group: rephraser
-instance_type: m1.small
+instance_type: t1.micro
 # Arch Linux
-image: ami-977e63d2
+image: ami-d3d5c996
 instance_count: 1
 
 
