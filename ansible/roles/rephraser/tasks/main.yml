@@ -3,7 +3,7 @@
   ec2_facts:
 
 - name: Install required Arch packages
-  pacman: name=git,nodejs
+  pacman: name=git,nodejs,haproxy
           state=installed
 
 - name: Install CoffeeScript
