@@ -23,6 +23,10 @@ source src {
   internal();
 };
  
+source s_all {
+  udp(ip(127.0.0.1) port(514));
+};
+ 
 destination df_haproxy { file("/var/log/haproxy.log"); };
 destination df_haproxy1 { file("/var/log/haproxy1.log"); };
  
