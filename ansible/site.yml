@@ -34,7 +34,6 @@
     - common_packages
     - rephraser
     - dns
-    - haproxy
 
 - name: Enable CloudWatch monitoring and alarms
   hosts: launch
