@@ -3,8 +3,8 @@ ansible_python_interpreter: /usr/bin/python2
 ansible_sh_interpreter: /usr/bin/sh
 
 
-tag_customer: rephraser
-tag_project: repheraser
+tag_customer: pandastrike
+tag_project: rephraser
 tag_name: rephraser
 tag_role: app
 port: 80
